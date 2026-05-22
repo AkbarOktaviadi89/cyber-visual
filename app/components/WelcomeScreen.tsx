@@ -64,16 +64,16 @@ export default function WelcomeScreen({ onSelect }: { onSelect: (id: string) => 
             const Icon = ATTACK_ICON_MAP[a.id];
             return (
               <button key={a.id} onClick={() => onSelect(a.id)} style={{
-                textAlign: 'left', background: a.bgColor, border: `1px solid ${a.borderColor}`,
+                textAlign: 'left', background: 'rgba(255,45,85,0.06)', border: '1px solid rgba(255,45,85,0.18)',
                 borderRadius: '12px', padding: '16px', cursor: 'pointer', transition: 'all 0.2s',
               }}
-                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'translateY(-3px)'; (e.currentTarget as HTMLElement).style.boxShadow = `0 8px 24px ${a.color}22`; }}
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'translateY(-3px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 8px 24px rgba(255,45,85,0.15)'; }}
                 onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = 'translateY(0)'; (e.currentTarget as HTMLElement).style.boxShadow = 'none'; }}
               >
                 <div style={{ marginBottom: '12px' }}>
-                  {Icon && <Icon size={26} color={a.color} strokeWidth={1.5} />}
+                  {Icon && <Icon size={26} color="#ff2d55" strokeWidth={1.5} />}
                 </div>
-                <div style={{ fontFamily: 'var(--mono)', fontSize: '14px', fontWeight: 700, color: a.color, marginBottom: '6px' }}>{a.name}</div>
+                <div style={{ fontFamily: 'var(--mono)', fontSize: '14px', fontWeight: 700, color: '#ff2d55', marginBottom: '6px' }}>{a.name}</div>
                 <div style={{ fontFamily: 'var(--mono)', fontSize: '12px', color: 'var(--text-muted)', lineHeight: 1.5 }}>{a.shortDesc}</div>
               </button>
             );
@@ -96,8 +96,8 @@ export default function WelcomeScreen({ onSelect }: { onSelect: (id: string) => 
                 display: 'flex', alignItems: 'center', gap: '12px',
               }}
                 onMouseEnter={e => {
-                  (e.currentTarget as HTMLElement).style.background = a.bgColor;
-                  (e.currentTarget as HTMLElement).style.borderColor = a.borderColor;
+                  (e.currentTarget as HTMLElement).style.background = 'var(--surface2)';
+                  (e.currentTarget as HTMLElement).style.borderColor = 'var(--border2)';
                   (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)';
                 }}
                 onMouseLeave={e => {
@@ -108,10 +108,10 @@ export default function WelcomeScreen({ onSelect }: { onSelect: (id: string) => 
               >
                 <div style={{
                   width: '40px', height: '40px', borderRadius: '10px', flexShrink: 0,
-                  background: a.bgColor, border: `1px solid ${a.borderColor}`,
+                  background: 'var(--surface2)', border: '1px solid var(--border2)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                 }}>
-                  {Icon && <Icon size={20} color={a.color} strokeWidth={1.5} />}
+                  {Icon && <Icon size={20} color="var(--text-secondary)" strokeWidth={1.5} />}
                 </div>
                 <div>
                   <div style={{ fontFamily: 'var(--mono)', fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '3px' }}>{a.name}</div>

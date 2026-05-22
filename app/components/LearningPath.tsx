@@ -52,7 +52,15 @@ const DIFFICULTY_MAP: Record<string, Difficulty> = {
 };
 
 const SEV_COLOR: Record<string, string> = {
-  CRITICAL: '#ff0055', HIGH: '#ff7b2c', MEDIUM: '#ffc83d', LOW: '#2dff8a',
+  CRITICAL: '#ff2d55', HIGH: '#ff7b2c', MEDIUM: '#e8c840', LOW: '#2dff8a',
+};
+const SEV_BG: Record<string, string> = {
+  CRITICAL: 'rgba(255,45,85,0.08)',  HIGH: 'rgba(255,123,44,0.08)',
+  MEDIUM:   'rgba(232,200,64,0.08)', LOW:  'rgba(45,255,138,0.08)',
+};
+const SEV_BORDER: Record<string, string> = {
+  CRITICAL: 'rgba(255,45,85,0.22)',  HIGH: 'rgba(255,123,44,0.22)',
+  MEDIUM:   'rgba(232,200,64,0.22)', LOW:  'rgba(45,255,138,0.22)',
 };
 
 const LEVEL_CONFIG: Record<Difficulty, { icon: typeof BookOpen; color: string; bg: string; border: string; descKey: string }> = {
@@ -210,15 +218,15 @@ export default function LearningPath({ onSelectAttack }: Props) {
                     style={{
                       textAlign: 'left', padding: '12px 14px',
                       borderRadius: '10px',
-                      border: `1px solid ${isViewed ? a.borderColor : 'var(--border)'}`,
-                      background: isViewed ? a.bgColor : 'var(--surface2)',
+                      border: `1px solid ${isViewed ? SEV_BORDER[a.severity] : 'var(--border)'}`,
+                      background: isViewed ? SEV_BG[a.severity] : 'var(--surface2)',
                       cursor: 'pointer', transition: 'all 0.18s',
                       display: 'flex', alignItems: 'center', gap: '10px',
                     }}
                     onMouseEnter={e => {
                       if (!isViewed) {
-                        (e.currentTarget as HTMLElement).style.background = a.bgColor;
-                        (e.currentTarget as HTMLElement).style.borderColor = a.borderColor;
+                        (e.currentTarget as HTMLElement).style.background = SEV_BG[a.severity];
+                        (e.currentTarget as HTMLElement).style.borderColor = SEV_BORDER[a.severity];
                       }
                       (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)';
                     }}
@@ -232,25 +240,25 @@ export default function LearningPath({ onSelectAttack }: Props) {
                   >
                     <div style={{
                       width: '22px', height: '22px', borderRadius: '50%', flexShrink: 0,
-                      background: isViewed ? 'rgba(45,255,138,0.15)' : 'var(--border)',
-                      border: `1px solid ${isViewed ? '#2dff8a' : 'var(--border2)'}`,
+                      background: isViewed ? SEV_BG[a.severity] : 'var(--border)',
+                      border: `1px solid ${isViewed ? SEV_BORDER[a.severity] : 'var(--border2)'}`,
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                       fontFamily: 'var(--mono)', fontSize: '9px',
-                      color: isViewed ? '#2dff8a' : 'var(--text-muted)',
+                      color: isViewed ? SEV_COLOR[a.severity] : 'var(--text-muted)',
                     }}>
-                      {isViewed ? <CheckCircle size={11} color="#2dff8a" /> : idx + 1}
+                      {isViewed ? <CheckCircle size={11} color={SEV_COLOR[a.severity]} /> : idx + 1}
                     </div>
                     <div style={{
                       width: '28px', height: '28px', borderRadius: '7px', flexShrink: 0,
-                      background: a.bgColor, border: `1px solid ${a.borderColor}`,
+                      background: 'var(--surface2)', border: '1px solid var(--border2)',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                     }}>
-                      {Icon && <Icon size={13} color={a.color} strokeWidth={1.5} />}
+                      {Icon && <Icon size={13} color="var(--text-secondary)" strokeWidth={1.5} />}
                     </div>
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{
                         fontFamily: 'var(--mono)', fontSize: '12px', fontWeight: 700,
-                        color: isViewed ? a.color : 'var(--text-primary)',
+                        color: isViewed ? SEV_COLOR[a.severity] : 'var(--text-primary)',
                         whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
                         marginBottom: '2px',
                       }}>{a.name}</div>

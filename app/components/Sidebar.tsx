@@ -15,13 +15,7 @@ interface SidebarProps {
 }
 
 const severityColor: Record<string, string> = {
-  CRITICAL: '#ff0055', HIGH: '#ff7b2c', MEDIUM: '#ffc83d', LOW: '#2dff8a',
-};
-const categoryColor: Record<string, string> = {
-  'Social Engineering': '#ffc83d', 'Malware': '#ff4444', 'Web Attack': '#4d94ff',
-  'Network Attack': '#2dff8a', 'Cryptography': '#a78bfa', 'Physical': '#fb923c',
-  'Insider Threat': '#f87171', 'AI-Powered': '#a855f7', 'Cloud Security': '#60a5fa',
-  'Mobile': '#34d399', 'IoT': '#f59e0b',
+  CRITICAL: '#ff2d55', HIGH: '#ff7b2c', MEDIUM: '#e8c840', LOW: '#2dff8a',
 };
 
 const SEV_ITEMS: { sev: Severity; color: string }[] = [
@@ -41,8 +35,8 @@ function AttackItem({ attack, selected, onSelect }: { attack: Attack; selected: 
       style={{
         width: '100%', display: 'flex', alignItems: 'center', gap: '10px',
         padding: '8px 10px', borderRadius: '8px', border: '1px solid',
-        borderColor: isSelected ? attack.borderColor : 'transparent',
-        background: isSelected ? attack.bgColor : 'transparent',
+        borderColor: isSelected ? 'rgba(0,212,255,0.22)' : 'transparent',
+        background: isSelected ? 'rgba(0,212,255,0.07)' : 'transparent',
         cursor: 'pointer', textAlign: 'left', marginBottom: '3px', transition: 'all 0.15s',
       }}
       onMouseEnter={e => {
@@ -62,15 +56,16 @@ function AttackItem({ attack, selected, onSelect }: { attack: Attack; selected: 
     >
       <div style={{
         width: '32px', height: '32px', borderRadius: '8px', flexShrink: 0,
-        background: attack.bgColor, border: `1px solid ${attack.borderColor}`,
+        background: isSelected ? 'rgba(0,212,255,0.12)' : 'var(--surface2)',
+        border: `1px solid ${isSelected ? 'rgba(0,212,255,0.3)' : 'var(--border2)'}`,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
       }}>
-        {Icon && <Icon size={15} color={attack.color} strokeWidth={1.5} />}
+        {Icon && <Icon size={15} color={isSelected ? '#00d4ff' : 'var(--text-secondary)'} strokeWidth={1.5} />}
       </div>
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{
           fontSize: '13px', fontWeight: 600, fontFamily: 'var(--mono)',
-          color: isSelected ? attack.color : 'var(--text-primary)',
+          color: isSelected ? '#00d4ff' : 'var(--text-primary)',
           marginBottom: '2px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
         }}>
           {attack.name}
@@ -216,7 +211,7 @@ export default function Sidebar({ selected, onSelect, search, onSearch, isMobile
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 10px' }}>
         {Array.from(filteredGrouped.entries()).map(([cat, list]) => {
           const catOpen = isSearching || expanded.has(cat);
-          const col     = categoryColor[cat] ?? '#00d4ff';
+          const col     = 'rgba(0,212,255,0.45)';
 
           return (
             <div key={cat} style={{ marginBottom: '6px' }}>
