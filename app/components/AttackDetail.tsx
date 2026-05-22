@@ -116,151 +116,142 @@ export default function AttackDetail({ attack }: { attack: Attack }) {
     <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0, overflow: 'hidden', position: 'relative' }}>
 
       {/* ── HEADER ─────────────────────────────────────────────────────────── */}
-      <div style={{
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '10px 20px', flexShrink: 0,
-        borderBottom: '1px solid var(--border)',
-        background: 'rgba(6,8,16,0.6)',
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <div style={{
-            width: '40px', height: '40px', borderRadius: '10px',
-            background: attack.bgColor, border: `1px solid ${attack.borderColor}`,
-            display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-          }}>
-            {AttackIcon && <AttackIcon size={20} color={attack.color} strokeWidth={1.5} />}
+      <div style={{ flexShrink: 0, borderBottom: '1px solid var(--border)', background: 'rgba(6,8,16,0.6)' }}>
+
+        {/* Row 1 — attack identity + action buttons */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 20px', gap: '12px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', minWidth: 0 }}>
+            <div style={{
+              width: '36px', height: '36px', borderRadius: '9px',
+              background: attack.bgColor, border: `1px solid ${attack.borderColor}`,
+              display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+            }}>
+              {AttackIcon && <AttackIcon size={17} color={attack.color} strokeWidth={1.5} />}
+            </div>
+            <div style={{ minWidth: 0 }}>
+              <div style={{ fontFamily: 'var(--display)', fontSize: '15px', fontWeight: 800, color: attack.color, letterSpacing: '0.04em', marginBottom: '4px' }}>
+                {attack.name}
+              </div>
+              <div style={{ display: 'flex', gap: '4px', alignItems: 'center', flexWrap: 'nowrap', overflow: 'hidden' }}>
+                <span style={{
+                  fontSize: '10px', padding: '1px 6px', borderRadius: '3px', flexShrink: 0,
+                  background: SEV_BG[attack.severity], border: `1px solid ${SEV_COLOR[attack.severity]}`,
+                  color: SEV_COLOR[attack.severity], fontFamily: 'var(--mono)', letterSpacing: '0.1em', fontWeight: 700,
+                }}>{attack.severity}</span>
+                <span style={{
+                  fontSize: '10px', padding: '1px 6px', borderRadius: '3px', flexShrink: 0,
+                  background: 'var(--surface2)', border: '1px solid var(--border)',
+                  color: 'var(--text-muted)', fontFamily: 'var(--mono)',
+                }}>{attack.category.toUpperCase()}</span>
+                {attack.tags.slice(0, 3).map(tag => (
+                  <span key={tag} style={{
+                    fontSize: '10px', padding: '1px 6px', borderRadius: '3px', flexShrink: 0,
+                    background: `${attack.color}0d`, border: `1px solid ${attack.color}1a`,
+                    color: `${attack.color}99`, fontFamily: 'var(--mono)',
+                  }}>{tag}</span>
+                ))}
+              </div>
+            </div>
           </div>
-          <div>
-            <div style={{ fontFamily: 'var(--display)', fontSize: '16px', fontWeight: 800, color: attack.color, letterSpacing: '0.04em' }}>
-              {attack.name}
-            </div>
-            <div style={{ display: 'flex', gap: '5px', marginTop: '3px', flexWrap: 'wrap' }}>
-              <span style={{
-                fontSize: '11px', padding: '2px 7px', borderRadius: '3px',
-                background: SEV_BG[attack.severity], border: `1px solid ${SEV_COLOR[attack.severity]}`,
-                color: SEV_COLOR[attack.severity], fontFamily: 'var(--mono)', letterSpacing: '0.1em', fontWeight: 700,
-              }}>{attack.severity}</span>
-              <span style={{
-                fontSize: '11px', padding: '2px 7px', borderRadius: '3px',
-                background: 'var(--surface2)', border: '1px solid var(--border)',
-                color: 'var(--text-muted)', fontFamily: 'var(--mono)',
-              }}>{attack.category.toUpperCase()}</span>
-              {attack.tags.map(tag => (
-                <span key={tag} style={{
-                  fontSize: '11px', padding: '2px 7px', borderRadius: '3px',
-                  background: `${attack.color}0d`, border: `1px solid ${attack.color}22`,
-                  color: `${attack.color}bb`, fontFamily: 'var(--mono)', letterSpacing: '0.04em',
-                }}>{tag}</span>
-              ))}
-              {(MITRE[attack.id] ?? []).map(m => (
-                <span key={m.id} title={`${m.tactic} — ${m.technique}`} style={{
-                  fontSize: '10px', padding: '2px 7px', borderRadius: '3px',
-                  background: 'rgba(255,200,61,0.08)', border: '1px solid rgba(255,200,61,0.25)',
-                  color: '#ffc83d', fontFamily: 'var(--mono)', letterSpacing: '0.05em', cursor: 'default',
-                }}>ATT&amp;CK {m.id}</span>
-              ))}
-            </div>
+
+          {/* Action buttons */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0 }}>
+            <button onClick={() => setShowQuiz(true)} style={{
+              display: 'flex', alignItems: 'center', gap: '5px',
+              padding: '5px 12px', borderRadius: '6px',
+              border: `1px solid ${attack.borderColor}`, background: attack.bgColor,
+              color: attack.color, fontFamily: 'var(--mono)', fontSize: '10px',
+              fontWeight: 700, letterSpacing: '0.08em', cursor: 'pointer', transition: 'all 0.15s',
+            }}>
+              <HelpCircle size={11} /> {t('takeQuizBtn')}
+            </button>
+            <button onClick={() => setShowSim(true)} style={{
+              display: 'flex', alignItems: 'center', gap: '5px',
+              padding: '5px 12px', borderRadius: '6px',
+              border: '1px solid rgba(0,212,255,0.3)', background: 'rgba(0,212,255,0.06)',
+              color: '#00d4ff', fontFamily: 'var(--mono)', fontSize: '10px',
+              fontWeight: 700, letterSpacing: '0.08em', cursor: 'pointer', transition: 'all 0.15s',
+            }}>
+              <TermIcon size={11} /> {t('simulateBtn')}
+            </button>
           </div>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-          {/* Quiz + Simulate buttons */}
-          <button onClick={() => setShowQuiz(true)} style={{
-            display: 'flex', alignItems: 'center', gap: '5px',
-            padding: '5px 11px', borderRadius: '6px',
-            border: `1px solid ${attack.borderColor}`, background: attack.bgColor,
-            color: attack.color, fontFamily: 'var(--mono)', fontSize: '10px',
-            fontWeight: 700, letterSpacing: '0.08em', cursor: 'pointer',
-            transition: 'all 0.15s',
-          }}>
-            <HelpCircle size={11} /> {t('takeQuizBtn')}
-          </button>
-          <button onClick={() => setShowSim(true)} style={{
-            display: 'flex', alignItems: 'center', gap: '5px',
-            padding: '5px 11px', borderRadius: '6px',
-            border: '1px solid rgba(0,212,255,0.3)', background: 'rgba(0,212,255,0.06)',
-            color: '#00d4ff', fontFamily: 'var(--mono)', fontSize: '10px',
-            fontWeight: 700, letterSpacing: '0.08em', cursor: 'pointer',
-            transition: 'all 0.15s',
-          }}>
-            <TermIcon size={11} /> {t('simulateBtn')}
-          </button>
-          <div style={{ width: '1px', height: '20px', background: 'var(--border)', margin: '0 2px' }} />
-          {/* Keyboard hint */}
-          <div style={{ display: 'flex', gap: '3px', marginRight: '6px' }}>
-            {(['←', '→', '1-9', 'Space'].map(k => (
-              <span key={k} style={{
-                fontSize: '11px', padding: '3px 8px', borderRadius: '4px',
-                background: 'var(--surface2)', border: '1px solid var(--border)',
-                color: 'var(--text-muted)', fontFamily: 'var(--mono)',
-              }}>{k}</span>
-            )))}
-          </div>
-
-          {/* Step dots */}
-          {attack.steps.map((_, i) => (
-            <button key={i} onClick={() => setStep(i)} style={{
-              width: i === step ? '20px' : '8px', height: '8px',
-              borderRadius: '4px', border: 'none', cursor: 'pointer',
-              background: i === step ? attack.color : i < step ? '#2dff8a' : 'var(--border2)',
-              transition: 'all 0.2s', padding: 0,
-            }} />
-          ))}
-
-          <div style={{ width: '1px', height: '20px', background: 'var(--border)', margin: '0 2px' }} />
-
-          <span style={{ fontSize: '12px', color: 'var(--text-muted)', fontFamily: 'var(--mono)', width: '34px' }}>
-            {step + 1}/{attack.steps.length}
-          </span>
-
-          {/* Speed control */}
-          <div style={{ display: 'flex', gap: '3px' }}>
-            {([0.5, 1, 1.5, 2] as const).map(s => (
-              <button key={s} onClick={() => setSpeed(s)} style={{
-                padding: '4px 9px', borderRadius: '5px', border: '1px solid',
-                borderColor: speed === s ? attack.borderColor : 'var(--border)',
-                background: speed === s ? attack.bgColor : 'transparent',
-                color: speed === s ? attack.color : 'var(--text-muted)',
-                fontFamily: 'var(--mono)', fontSize: '11px', cursor: 'pointer',
-                transition: 'all 0.12s',
-              }}>{s}×</button>
+        {/* Row 2 — MITRE badges + step controls */}
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          padding: '6px 20px 8px', borderTop: '1px solid var(--border)',
+          gap: '12px',
+        }}>
+          {/* MITRE badges */}
+          <div style={{ display: 'flex', gap: '4px', overflow: 'hidden', flexShrink: 1, minWidth: 0 }}>
+            {(MITRE[attack.id] ?? []).map(m => (
+              <span key={m.id} title={`${m.tactic} — ${m.technique}`} style={{
+                fontSize: '9px', padding: '2px 6px', borderRadius: '3px', flexShrink: 0,
+                background: 'rgba(255,200,61,0.07)', border: '1px solid rgba(255,200,61,0.2)',
+                color: 'rgba(255,200,61,0.7)', fontFamily: 'var(--mono)', letterSpacing: '0.05em', cursor: 'default',
+                whiteSpace: 'nowrap',
+              }}>ATT&amp;CK {m.id}</span>
             ))}
           </div>
 
-          {/* Play/Pause */}
-          <button
-            onClick={() => setIsPlaying(v => !v)}
-            title={isPlaying ? 'Pause (Space)' : 'Auto-play (Space)'}
-            style={{
-              width: '30px', height: '30px', borderRadius: '7px',
+          {/* Step controls */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '5px', flexShrink: 0 }}>
+            {/* Step dots */}
+            {attack.steps.map((_, i) => (
+              <button key={i} onClick={() => setStep(i)} style={{
+                width: i === step ? '18px' : '7px', height: '7px',
+                borderRadius: '4px', border: 'none', cursor: 'pointer',
+                background: i === step ? attack.color : i < step ? '#2dff8a' : 'var(--border2)',
+                transition: 'all 0.2s', padding: 0,
+              }} />
+            ))}
+            <span style={{ fontSize: '11px', color: 'var(--text-muted)', fontFamily: 'var(--mono)', width: '30px', textAlign: 'right' }}>
+              {step + 1}/{attack.steps.length}
+            </span>
+            <div style={{ width: '1px', height: '16px', background: 'var(--border)' }} />
+            {/* Speed */}
+            <div style={{ display: 'flex', gap: '2px' }}>
+              {([0.5, 1, 1.5, 2] as const).map(s => (
+                <button key={s} onClick={() => setSpeed(s)} style={{
+                  padding: '3px 7px', borderRadius: '4px', border: '1px solid',
+                  borderColor: speed === s ? attack.borderColor : 'var(--border)',
+                  background: speed === s ? attack.bgColor : 'transparent',
+                  color: speed === s ? attack.color : 'var(--text-muted)',
+                  fontFamily: 'var(--mono)', fontSize: '10px', cursor: 'pointer', transition: 'all 0.12s',
+                }}>{s}×</button>
+              ))}
+            </div>
+            {/* Play/Pause */}
+            <button onClick={() => setIsPlaying(v => !v)} title={isPlaying ? 'Pause (Space)' : 'Play (Space)'} style={{
+              width: '27px', height: '27px', borderRadius: '6px',
               border: `1px solid ${isPlaying ? attack.borderColor : 'var(--border2)'}`,
               background: isPlaying ? attack.bgColor : 'var(--surface2)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               cursor: 'pointer', transition: 'all 0.15s',
             }}>
-            {isPlaying
-              ? <Pause  size={13} color={attack.color} />
-              : <Play   size={13} color="var(--text-muted)" />}
-          </button>
-
-          <button onClick={() => go(-1)} disabled={step === 0} style={{
-            width: '30px', height: '30px', borderRadius: '7px',
-            border: '1px solid var(--border2)', background: 'var(--surface2)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            cursor: step === 0 ? 'default' : 'pointer',
-            opacity: step === 0 ? 0.3 : 1, transition: 'opacity 0.15s',
+              {isPlaying ? <Pause size={12} color={attack.color} /> : <Play size={12} color="var(--text-muted)" />}
+            </button>
+            {/* Prev / Next */}
+            <button onClick={() => go(-1)} disabled={step === 0} style={{
+              width: '27px', height: '27px', borderRadius: '6px',
+              border: '1px solid var(--border2)', background: 'var(--surface2)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              cursor: step === 0 ? 'default' : 'pointer',
+              opacity: step === 0 ? 0.3 : 1, transition: 'opacity 0.15s',
+            }}>
+              <ChevronLeft size={14} color="var(--text-primary)" />
+            </button>
+            <button onClick={() => go(1)} disabled={step === attack.steps.length - 1} style={{
+              width: '27px', height: '27px', borderRadius: '6px',
+              border: '1px solid var(--border2)', background: 'var(--surface2)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              cursor: step === attack.steps.length - 1 ? 'default' : 'pointer',
+              opacity: step === attack.steps.length - 1 ? 0.3 : 1, transition: 'opacity 0.15s',
           }}>
-            <ChevronLeft size={15} color="var(--text-primary)" />
-          </button>
-          <button onClick={() => go(1)} disabled={step === attack.steps.length - 1} style={{
-            width: '30px', height: '30px', borderRadius: '7px',
-            border: '1px solid var(--border2)', background: 'var(--surface2)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            cursor: step === attack.steps.length - 1 ? 'default' : 'pointer',
-            opacity: step === attack.steps.length - 1 ? 0.3 : 1, transition: 'opacity 0.15s',
-          }}>
-            <ChevronRight size={15} color="var(--text-primary)" />
-          </button>
+            <ChevronRight size={14} color="var(--text-primary)" />
+            </button>
+          </div>
         </div>
       </div>
 
