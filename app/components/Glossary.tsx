@@ -109,7 +109,7 @@ export default function Glossary({ onSelectAttack }: Props) {
       </div>
 
       {/* Term list */}
-      <div style={{ flex: 1, overflowY: 'auto', padding: '0 24px 24px' }}>
+      <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '0 24px 24px' }}>
         {sortedLetters.length === 0 ? (
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '48px 16px', gap: '10px' }}>
             <span style={{ fontSize: '28px' }}>🔍</span>

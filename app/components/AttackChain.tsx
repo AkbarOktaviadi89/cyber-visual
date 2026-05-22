@@ -63,7 +63,7 @@ export default function AttackChainView({ onSelectAttack }: Props) {
       </div>
 
       {/* Selected chain body */}
-      <div style={{ flex: 1, overflowY: 'auto', padding: '20px 24px 32px' }}>
+      <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '20px 24px 32px' }}>
 
         {/* Chain meta */}
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', alignItems: 'flex-start', marginBottom: '14px' }}>

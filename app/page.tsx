@@ -28,6 +28,8 @@ function useIsMobile() {
   return mobile;
 }
 
+const VALID_VIEWS: AppView[] = ['attack', 'stats', 'cheatsheet', 'compare', 'learn', 'glossary', 'chain', 'scenario'];
+
 export default function Home() {
   const [selected,    setSelected]    = useState<string | null>(null);
   const [search,      setSearch]      = useState('');
@@ -35,16 +37,31 @@ export default function Home() {
   const [view,        setView]        = useState<AppView>('attack');
   const isMobile = useIsMobile();
 
+  // Restore persisted state after mount
+  useEffect(() => {
+    try {
+      const savedView     = localStorage.getItem('cyber-viz-view') as AppView | null;
+      const savedSelected = localStorage.getItem('cyber-viz-selected');
+      if (savedView && VALID_VIEWS.includes(savedView)) setView(savedView);
+      if (savedSelected) setSelected(savedSelected);
+    } catch {}
+  }, []);
+
   const selectedAttack = attacks.find(a => a.id === selected) || null;
 
   const handleSelect = (id: string) => {
     setSelected(id);
     setView('attack');
+    try {
+      localStorage.setItem('cyber-viz-selected', id);
+      localStorage.setItem('cyber-viz-view', 'attack');
+    } catch {}
     if (isMobile) setSidebarOpen(false);
   };
 
   const handleNav = (v: AppView) => {
     setView(v);
+    try { localStorage.setItem('cyber-viz-view', v); } catch {}
     if (isMobile) setSidebarOpen(false);
   };
 

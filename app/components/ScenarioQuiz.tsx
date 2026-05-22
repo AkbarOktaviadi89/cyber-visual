@@ -273,7 +273,7 @@ export default function ScenarioQuiz({ onSelectAttack }: Props) {
       </div>
 
       {/* Scenario cards list */}
-      <div style={{ flex: 1, overflowY: 'auto', padding: '20px 24px 32px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '20px 24px 32px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
         {filtered.length === 0 ? (
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '48px 16px', gap: '10px' }}>
             <Trophy size={28} color="var(--text-muted)" strokeWidth={1.5} />
