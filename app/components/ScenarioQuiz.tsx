@@ -36,7 +36,7 @@ function ScenarioCard({ scenario, selectedIndex, onSelect, onLearnAttack }: Scen
     <div style={{
       background: 'var(--surface)', border: `1px solid ${answered ? (isCorrect ? 'rgba(45,255,138,0.25)' : 'rgba(255,45,85,0.25)') : 'var(--border)'}`,
       borderRadius: '12px', overflow: 'hidden',
-      transition: 'border-color 0.2s',
+      transition: 'border-color 0.2s', flexShrink: 0,
     }}>
       {/* Card header */}
       <div style={{

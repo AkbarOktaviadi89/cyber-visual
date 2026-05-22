@@ -133,7 +133,7 @@ export default function Glossary({ onSelectAttack }: Props) {
                 const isOpen = expandedId === term.id;
                 const color  = catColor(term.category);
                 return (
-                  <div key={term.id} style={{ borderBottom: '1px solid var(--border)' }}>
+                  <div key={term.id} style={{ borderBottom: '1px solid var(--border)', flexShrink: 0 }}>
                     {/* Row */}
                     <button onClick={() => toggle(term.id)}
                       style={{
