@@ -1,9 +1,9 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { ShieldAlert, Menu, BarChart2, BookOpen, ArrowLeftRight, GraduationCap, Languages, BookMarked, GitMerge, Brain } from 'lucide-react';
+import { ShieldAlert, Menu, BarChart2, BookOpen, ArrowLeftRight, GraduationCap, Languages, BookMarked, GitMerge, Brain, Clock, Bug, CheckSquare, Globe } from 'lucide-react';
 import { useLang } from '../lib/language';
 
-export type AppView = 'attack' | 'stats' | 'cheatsheet' | 'compare' | 'learn' | 'glossary' | 'chain' | 'scenario';
+export type AppView = 'attack' | 'stats' | 'cheatsheet' | 'compare' | 'learn' | 'glossary' | 'chain' | 'scenario' | 'timeline' | 'cve' | 'checklist' | 'map';
 
 interface HeaderProps {
   isMobile?: boolean;
@@ -20,6 +20,10 @@ const NAV_ITEMS: { view: AppView; icon: typeof BarChart2; labelKey: string }[] =
   { view: 'glossary',   icon: BookMarked,       labelKey: 'navGlossary'   },
   { view: 'chain',      icon: GitMerge,         labelKey: 'navChain'      },
   { view: 'scenario',   icon: Brain,            labelKey: 'navScenario'   },
+  { view: 'timeline',   icon: Clock,            labelKey: 'navTimeline'   },
+  { view: 'cve',        icon: Bug,              labelKey: 'navCVE'        },
+  { view: 'checklist',  icon: CheckSquare,      labelKey: 'navChecklist'  },
+  { view: 'map',        icon: Globe,            labelKey: 'navMap'        },
 ];
 
 export default function Header({ isMobile, onToggleSidebar, currentView, onNav }: HeaderProps) {

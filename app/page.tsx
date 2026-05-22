@@ -13,6 +13,10 @@ import LearningPath from './components/LearningPath';
 import Glossary from './components/Glossary';
 import AttackChainView from './components/AttackChain';
 import ScenarioQuiz from './components/ScenarioQuiz';
+import TimelineHeatmap from './components/TimelineHeatmap';
+import CVEExplorer from './components/CVEExplorer';
+import DefenseChecklist from './components/DefenseChecklist';
+import AttackMapLive from './components/AttackMapLive';
 import { LanguageProvider } from './lib/language';
 
 const NetworkBackground = dynamic(() => import('./components/NetworkBackground'), { ssr: false });
@@ -28,7 +32,7 @@ function useIsMobile() {
   return mobile;
 }
 
-const VALID_VIEWS: AppView[] = ['attack', 'stats', 'cheatsheet', 'compare', 'learn', 'glossary', 'chain', 'scenario'];
+const VALID_VIEWS: AppView[] = ['attack', 'stats', 'cheatsheet', 'compare', 'learn', 'glossary', 'chain', 'scenario', 'timeline', 'cve', 'checklist', 'map'];
 
 export default function Home() {
   const [selected,    setSelected]    = useState<string | null>(null);
@@ -112,6 +116,10 @@ export default function Home() {
               {view === 'glossary'   && <Glossary     onSelectAttack={handleSelect} />}
               {view === 'chain'      && <AttackChainView onSelectAttack={handleSelect} />}
               {view === 'scenario'   && <ScenarioQuiz    onSelectAttack={handleSelect} />}
+              {view === 'timeline'   && <TimelineHeatmap onSelectAttack={handleSelect} />}
+              {view === 'cve'        && <CVEExplorer     onSelectAttack={handleSelect} />}
+              {view === 'checklist'  && <DefenseChecklist onSelectAttack={handleSelect} />}
+              {view === 'map'        && <AttackMapLive />}
               {view === 'attack'     && (
                 selectedAttack
                   ? <AttackDetail attack={selectedAttack} onSelectAttack={handleSelect} />

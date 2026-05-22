@@ -96,6 +96,10 @@ export const TRANSLATIONS = {
     navChain: 'Rantai Serangan',
     navScenario: 'Skenario',
     relatedAttacks: 'Serangan Terkait',
+    navTimeline: 'Timeline',
+    navCVE: 'CVE',
+    navChecklist: 'Checklist',
+    navMap: 'Attack Map',
   },
   en: {
     subtitle: '// Interactive Cybersecurity Attack Visualization',
@@ -179,6 +183,10 @@ export const TRANSLATIONS = {
     navChain: 'Attack Chain',
     navScenario: 'Scenarios',
     relatedAttacks: 'Related Attacks',
+    navTimeline: 'Timeline',
+    navCVE: 'CVE',
+    navChecklist: 'Checklist',
+    navMap: 'Attack Map',
   },
 } as const;
 
