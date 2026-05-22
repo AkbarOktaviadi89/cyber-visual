@@ -23,7 +23,7 @@ export default function AttackChainView({ onSelectAttack }: Props) {
   const chain = CHAINS.find(c => c.id === selectedId) ?? CHAINS[0];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', background: 'var(--bg)' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0, background: 'var(--bg)' }}>
 
       {/* Header */}
       <div style={{ padding: '24px 24px 16px', borderBottom: '1px solid var(--border)', flexShrink: 0 }}>
