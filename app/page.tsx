@@ -10,6 +10,9 @@ import StatsPanel from './components/StatsPanel';
 import CheatSheet from './components/CheatSheet';
 import CompareView from './components/CompareView';
 import LearningPath from './components/LearningPath';
+import Glossary from './components/Glossary';
+import AttackChainView from './components/AttackChain';
+import ScenarioQuiz from './components/ScenarioQuiz';
 import { LanguageProvider } from './lib/language';
 
 const NetworkBackground = dynamic(() => import('./components/NetworkBackground'), { ssr: false });
@@ -89,9 +92,12 @@ export default function Home() {
               {view === 'cheatsheet' && <CheatSheet   onSelectAttack={handleSelect} />}
               {view === 'compare'    && <CompareView />}
               {view === 'learn'      && <LearningPath onSelectAttack={handleSelect} />}
+              {view === 'glossary'   && <Glossary     onSelectAttack={handleSelect} />}
+              {view === 'chain'      && <AttackChainView onSelectAttack={handleSelect} />}
+              {view === 'scenario'   && <ScenarioQuiz    onSelectAttack={handleSelect} />}
               {view === 'attack'     && (
                 selectedAttack
-                  ? <AttackDetail attack={selectedAttack} />
+                  ? <AttackDetail attack={selectedAttack} onSelectAttack={handleSelect} />
                   : <WelcomeScreen onSelect={handleSelect} />
               )}
             </div>

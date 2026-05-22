@@ -1,9 +1,9 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { ShieldAlert, Menu, BarChart2, BookOpen, ArrowLeftRight, GraduationCap, Languages } from 'lucide-react';
+import { ShieldAlert, Menu, BarChart2, BookOpen, ArrowLeftRight, GraduationCap, Languages, BookMarked, GitMerge, Brain } from 'lucide-react';
 import { useLang } from '../lib/language';
 
-export type AppView = 'attack' | 'stats' | 'cheatsheet' | 'compare' | 'learn';
+export type AppView = 'attack' | 'stats' | 'cheatsheet' | 'compare' | 'learn' | 'glossary' | 'chain' | 'scenario';
 
 interface HeaderProps {
   isMobile?: boolean;
@@ -13,10 +13,13 @@ interface HeaderProps {
 }
 
 const NAV_ITEMS: { view: AppView; icon: typeof BarChart2; labelKey: string }[] = [
-  { view: 'stats',      icon: BarChart2,       labelKey: 'navStats'    },
+  { view: 'stats',      icon: BarChart2,       labelKey: 'navStats'      },
   { view: 'cheatsheet', icon: BookOpen,         labelKey: 'navCheatSheet' },
-  { view: 'compare',    icon: ArrowLeftRight,   labelKey: 'navCompare'  },
-  { view: 'learn',      icon: GraduationCap,    labelKey: 'navLearn'    },
+  { view: 'compare',    icon: ArrowLeftRight,   labelKey: 'navCompare'    },
+  { view: 'learn',      icon: GraduationCap,    labelKey: 'navLearn'      },
+  { view: 'glossary',   icon: BookMarked,       labelKey: 'navGlossary'   },
+  { view: 'chain',      icon: GitMerge,         labelKey: 'navChain'      },
+  { view: 'scenario',   icon: Brain,            labelKey: 'navScenario'   },
 ];
 
 export default function Header({ isMobile, onToggleSidebar, currentView, onNav }: HeaderProps) {

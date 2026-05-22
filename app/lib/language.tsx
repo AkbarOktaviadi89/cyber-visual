@@ -92,6 +92,10 @@ export const TRANSLATIONS = {
     severityLabel: 'Keparahan',
     stepsLabel: 'Langkah',
     defenseCountLabel: 'Pertahanan',
+    navGlossary: 'Glosarium',
+    navChain: 'Rantai Serangan',
+    navScenario: 'Skenario',
+    relatedAttacks: 'Serangan Terkait',
   },
   en: {
     subtitle: '// Interactive Cybersecurity Attack Visualization',
@@ -171,6 +175,10 @@ export const TRANSLATIONS = {
     severityLabel: 'Severity',
     stepsLabel: 'Steps',
     defenseCountLabel: 'Defenses',
+    navGlossary: 'Glossary',
+    navChain: 'Attack Chain',
+    navScenario: 'Scenarios',
+    relatedAttacks: 'Related Attacks',
   },
 } as const;
 

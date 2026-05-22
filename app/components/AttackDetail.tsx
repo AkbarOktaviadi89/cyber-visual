@@ -1,7 +1,7 @@
 'use client';
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { ChevronLeft, ChevronRight, X, Code2, Play, Pause, ShieldCheck, ChevronUp, Maximize2, Minimize2, HelpCircle, Terminal as TermIcon } from 'lucide-react';
-import type { Attack } from '../data/attacks';
+import { attacks, type Attack } from '../data/attacks';
 import { ATTACK_ICON_MAP, STEP_ICON_MAP } from '../lib/icons';
 import { SCENES } from '../data/scenes';
 import { MITRE } from '../data/mitre';
@@ -18,7 +18,7 @@ const SEV_BG: Record<string, string> = {
   MEDIUM: 'rgba(255,200,61,0.12)', LOW: 'rgba(45,255,138,0.12)',
 };
 
-export default function AttackDetail({ attack }: { attack: Attack }) {
+export default function AttackDetail({ attack, onSelectAttack }: { attack: Attack; onSelectAttack?: (id: string) => void }) {
   const { t } = useLang();
   const [step,         setStep]        = useState(0);
   const [showCode,     setShowCode]    = useState(false);
@@ -111,6 +111,22 @@ export default function AttackDetail({ attack }: { attack: Attack }) {
   const AttackIcon = ATTACK_ICON_MAP[attack.id];
   const StepIcon   = STEP_ICON_MAP[cur.icon];
   const scene      = SCENES[attack.id];
+
+  const relatedAttacks = useMemo(() => {
+    return attacks
+      .filter(a => a.id !== attack.id)
+      .map(a => {
+        let score = 0;
+        if (a.category === attack.category) score += 3;
+        if (a.severity === attack.severity) score += 1;
+        score += a.tags.filter(tag => attack.tags.includes(tag)).length * 2;
+        return { a, score };
+      })
+      .filter(({ score }) => score > 0)
+      .sort((x, y) => y.score - x.score)
+      .slice(0, 5)
+      .map(({ a }) => a);
+  }, [attack.id, attack.category, attack.severity, attack.tags]);
 
   return (
     <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0, overflow: 'hidden', position: 'relative' }}>
@@ -495,6 +511,35 @@ export default function AttackDetail({ attack }: { attack: Attack }) {
           </div>
         )}
       </div>
+
+      {/* ── RELATED ATTACKS ──────────────────────────────────────────────────── */}
+      {relatedAttacks.length > 0 && onSelectAttack && (
+        <div style={{ flexShrink: 0, borderTop: '1px solid var(--border)', background: 'rgba(6,8,16,0.7)', padding: '8px 16px', overflowX: 'auto', scrollbarWidth: 'none' }}>
+          <div style={{ display: 'flex', gap: '6px', alignItems: 'center', minWidth: 'max-content' }}>
+            <span style={{ fontFamily: 'var(--mono)', fontSize: '9px', color: 'var(--text-muted)', letterSpacing: '0.1em', flexShrink: 0, marginRight: '4px' }}>
+              {t('relatedAttacks').toUpperCase()}
+            </span>
+            {relatedAttacks.map(rel => {
+              const RelIcon = ATTACK_ICON_MAP[rel.id];
+              return (
+                <button key={rel.id} onClick={() => onSelectAttack(rel.id)} style={{
+                  display: 'flex', alignItems: 'center', gap: '6px',
+                  padding: '5px 10px', borderRadius: '7px', flexShrink: 0,
+                  border: `1px solid ${rel.borderColor}`, background: rel.bgColor,
+                  cursor: 'pointer', transition: 'all 0.15s',
+                }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.opacity = '0.8'; }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = '1'; }}
+                >
+                  {RelIcon && <RelIcon size={11} color={rel.color} strokeWidth={1.5} />}
+                  <span style={{ fontFamily: 'var(--mono)', fontSize: '11px', color: rel.color, fontWeight: 600, whiteSpace: 'nowrap' }}>{rel.name}</span>
+                  <span style={{ fontFamily: 'var(--mono)', fontSize: '9px', color: rel.color, opacity: 0.6 }}>{rel.severity}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {/* ── QUIZ OVERLAY ──────────────────────────────────────────────────────── */}
       {showQuiz && (
