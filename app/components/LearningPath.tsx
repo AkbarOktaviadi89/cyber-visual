@@ -111,10 +111,10 @@ export default function LearningPath({ onSelectAttack }: Props) {
   const levels: Difficulty[] = ['beginner', 'intermediate', 'advanced'];
 
   return (
-    <div style={{ flex: 1, overflowY: 'auto', padding: '28px 32px', display: 'flex', flexDirection: 'column', gap: '28px' }}>
+    <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '28px 32px', display: 'flex', flexDirection: 'column', gap: '28px' }}>
 
       {/* Title */}
-      <div>
+      <div style={{ flexShrink: 0 }}>
         <div style={{ fontFamily: 'var(--display)', fontSize: '22px', fontWeight: 900, color: 'var(--text-primary)', letterSpacing: '0.05em', marginBottom: '6px' }}>
           {t('learningPathTitle')}
         </div>
@@ -124,7 +124,7 @@ export default function LearningPath({ onSelectAttack }: Props) {
       </div>
 
       {/* Overall progress bar */}
-      <div>
+      <div style={{ flexShrink: 0 }}>
         <div style={{ height: '6px', borderRadius: '3px', background: 'var(--border)', overflow: 'hidden' }}>
           <div style={{
             height: '100%', borderRadius: '3px',
@@ -159,6 +159,7 @@ export default function LearningPath({ onSelectAttack }: Props) {
           <div key={lvl} style={{
             background: 'var(--surface)', border: `1px solid ${cfg.border}`,
             borderRadius: '14px', overflow: 'hidden',
+            flexShrink: 0,
           }}>
             {/* Level header */}
             <div style={{
