@@ -17,8 +17,16 @@ const orbitron = Orbitron({
 });
 
 export const metadata: Metadata = {
-  title: 'Cyber Attack Visualizer',
-  description: 'Pelajari mekanisme serangan siber secara interaktif step-by-step',
+  title: 'CyberThreat Lab',
+  description: 'Platform visualisasi serangan siber interaktif — pelajari 40+ teknik serangan step-by-step',
+  icons: {
+    icon: [
+      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico', sizes: '32x32', type: 'image/x-icon' },
+    ],
+    shortcut: '/icon.svg',
+    apple: '/icon.svg',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
